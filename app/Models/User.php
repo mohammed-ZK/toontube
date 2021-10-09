@@ -19,14 +19,28 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'sid',
+        'fcm',
+        'type',
         'name',
         'email',
         'password',
+        'type_id'
+        // 'email',
+        // 'password',
     ];
 
     function comment()
     {
         return $this->hasMany(\App\Models\Comment::class);
+    }
+    // function post()
+    // {
+    //     return $this->hasMany(\App\Models\Post::class);
+    // }
+    function type()
+    {
+        return $this->belongsTo(\App\Models\Type::class);
     }
     /**
      * The attributes that should be hidden for serialization.

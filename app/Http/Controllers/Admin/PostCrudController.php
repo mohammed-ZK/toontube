@@ -26,7 +26,7 @@ class PostCrudController extends CrudController
     // use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
-    
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -42,10 +42,12 @@ class PostCrudController extends CrudController
         CRUD::setModel(\App\Models\Post::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/post');
         CRUD::setEntityNameStrings('post', 'posts');
-        
+
         $this->crud->allowAccess('show');
         $this->crud->addFields($this->getFieldsData(TRUE));
         $this->crud->enableExportButtons();
+
+
         // $this->crud->enableDetailsRow();
 
         // $this->crud->addFilter([

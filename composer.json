@@ -9,6 +9,7 @@
         "backpack/crud": "4.1.*",
         "backpack/filemanager": "^1.1",
         "backpack/revise-operation": "^1.0",
+        "consoletvs/charts": "6.*",
         "doctrine/dbal": "^3.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

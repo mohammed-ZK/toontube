@@ -296,5 +296,11 @@ return [
     |
     */
 
+    'header_class' => 'app-header navbar navbar-color bg-primary border-0',
+    'body_class' => 'app aside-menu-fixed sidebar-lg-show',
+    'sidebar_class' => 'sidebar',
+    'footer_class' => 'app-footer d-none',
+
+    
     'license_code' => env('BACKPACK_LICENSE', false),
 ];

@@ -25,7 +25,26 @@ class Comment extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
-
+/**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'user_id',
+        'post_id',
+        'body'
+        // 'email',
+        // 'password',
+    ];
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        '',
+    ];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -36,7 +55,7 @@ class Comment extends Model
     function post(){
         return $this->belongsTo(\App\Models\Post::class);
     }
-    function User(){
+    function user(){
         return $this->belongsTo(\App\Models\User::class);
     }
 
@@ -45,7 +64,6 @@ class Comment extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES

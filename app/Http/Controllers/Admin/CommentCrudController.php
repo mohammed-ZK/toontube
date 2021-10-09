@@ -126,7 +126,7 @@ class CommentCrudController extends CrudController
             ],
             [
                 'name' => 'User',
-                'label' => 'User',
+                'label' => 'user',
                 'type'     => 'relationship',
                 'function' => function ($entry) {
                     return  $entry->name;
