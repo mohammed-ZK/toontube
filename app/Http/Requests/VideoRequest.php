@@ -26,7 +26,9 @@ class VideoRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => 'required',
+            'series_id' => 'required',
+            'URL' => 'required',
         ];
     }
 
@@ -50,7 +52,7 @@ class VideoRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'URL'=>'You should add video form anything Like Youtube '
         ];
     }
 }

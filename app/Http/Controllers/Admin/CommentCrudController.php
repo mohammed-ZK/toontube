@@ -15,17 +15,17 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class CommentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    // use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    // use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
-    
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -41,6 +41,7 @@ class CommentCrudController extends CrudController
         $this->crud->enableExportButtons();
         // $this->crud->enableDetailsRow();
 
+        $this->crud->addFields($this->getFieldsData(TRUE));
 
         $this->crud->addFilter(
             [
@@ -54,7 +55,7 @@ class CommentCrudController extends CrudController
             function ($value) {
                 $this->crud->addClause('where', 'post_id', $value);
             }
-        ); 
+        );
 
         $this->crud->addFilter(
             [
@@ -81,9 +82,9 @@ class CommentCrudController extends CrudController
     {
         // CRUD::setFromDb(); // columns
 
-        CRUD::addColumn('body');
-        
         $this->crud->addColumns($this->getColumnsData(TRUE));
+        
+        CRUD::addColumn('body');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -105,7 +106,7 @@ class CommentCrudController extends CrudController
 
         // CRUD::addField('body');
         // $this->crud->addFields($this->getFieldsData(TRUE));
-        
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -133,6 +134,50 @@ class CommentCrudController extends CrudController
                 }
             ],
         ];
+    }
+
+
+    private function getFieldsData($show = FALSE)
+    {
+        return [
+
+            [
+                'name' => 'body',
+                'label' => 'Body',
+                'type' => 'text',
+            ], 
+            [
+                'label' => "User",
+                'type' => 'select',
+                'name' => 'user_id',
+                'default'=>101,
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => 'App\Models\User',
+                'attributes' => [
+                    'readonly'    => 'readonly',
+                    // 'disabled'    => 'disabled',
+                  ],
+            ], 
+            [
+                'label' => "Post",
+                'type' => 'select',
+                'name' => 'post_id',
+                'entity' => 'post',
+                'attribute' => 'title',
+                'model' => 'App\Models\Post',
+            ],
+        ];
+    }
+    
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns(['post_id','user_id','body']);
+        
     }
 
     /**

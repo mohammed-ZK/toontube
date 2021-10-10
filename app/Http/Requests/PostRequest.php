@@ -28,6 +28,7 @@ class PostRequest extends FormRequest
         return [
             'body' => 'required|min:10',
             'category_id'=>'required',
+            'user_id'=>'required',
             'title'=>'required|string',
             'image'=>'required'
         ];

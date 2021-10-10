@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string("body");
             //$table->string("image");
             $table->foreignId("category_id");
+            $table->foreignId("user_id");
             // $table->boolean("statues")->default(False);
             $table->timestamps();
         });

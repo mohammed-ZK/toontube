@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PostRequest;
-use App\Models\Category;
 use App\Models\Post;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -27,8 +26,8 @@ class PostCrudController extends CrudController
     // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
 
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     use CrudTrait;
 
@@ -45,6 +44,7 @@ class PostCrudController extends CrudController
 
         $this->crud->allowAccess('show');
         $this->crud->addFields($this->getFieldsData(TRUE));
+
         $this->crud->enableExportButtons();
 
 
@@ -138,9 +138,18 @@ class PostCrudController extends CrudController
                 }
             ],
             [
+                'name' => 'user_id',
+                'label' => 'User',
+                'type'     => 'relationship',
+                'function' => function ($entry) {
+                    return  $entry->name;
+                }
+            ],
+            [
                 'name' => 'body',
                 'label' => 'body',
-                'type' => 'ckeditor',
+                'type' => 'ckeditor', 
+                
             ],
             [
                 'label' => "Post Image",
@@ -167,6 +176,23 @@ class PostCrudController extends CrudController
             // ]
         ];
     }
+
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns(['category_id', 'title','user_id','body']);
+        
+        $this->crud->addColumn(
+            [
+                'name' => 'image',
+                'label' => 'Image',
+                'type' => 'image',
+            ]
+        );
+    }
     private function getFieldsData($show = FALSE)
     {
         return [
@@ -183,6 +209,14 @@ class PostCrudController extends CrudController
                 'entity' => 'category',
                 'attribute' => 'name',
                 'model' => 'App\Models\Category',
+            ],
+            [
+                'label' => "User",
+                'type' => 'select',
+                'name' => 'user_id',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => 'App\Models\User',
             ],
             // [
             //     'name' => 'category_id',

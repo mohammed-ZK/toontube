@@ -19,9 +19,9 @@ class Comment extends Model
     */
 
     protected $table = 'comments';
-    // protected $primaryKey = 'id';
+    protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
@@ -42,9 +42,9 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        '',
-    ];
+    // protected $hidden = [
+    //     '',
+    // ];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

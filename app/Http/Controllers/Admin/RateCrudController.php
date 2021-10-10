@@ -78,6 +78,18 @@ class RateCrudController extends CrudController
          */
     }
 
+    
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns(['post_id','user_id','rate']);
+        
+    }
+
+
     /**
      * Define what happens when the Create operation is loaded.
      * 

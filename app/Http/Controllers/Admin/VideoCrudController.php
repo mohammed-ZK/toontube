@@ -21,10 +21,10 @@ class VideoCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
 
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -81,19 +81,31 @@ class VideoCrudController extends CrudController
             ], [   // Time
                 'name'  => 'intro_start',
                 'label' => 'intro_start',
-                'type'  => 'time'
+                'type'  => 'time',
+                'wrapper'   => [ 
+                    'class'      => 'form-group col-md-6'
+                 ],
             ], [   // Time
                 'name'  => 'intro_end',
                 'label' => 'intro_end',
-                'type'  => 'time'
+                'type'  => 'time',
+                'wrapper'   => [ 
+                    'class'      => 'form-group col-md-6'
+                 ],
             ], [   // Time
                 'name'  => 'outro_start',
                 'label' => 'outro_start',
-                'type'  => 'time'
+                'type'  => 'time',
+                'wrapper'   => [ 
+                    'class'      => 'form-group col-md-6'
+                 ],
             ], [   // Time
                 'name'  => 'outro_end',
-                'label' => 'intro_end',
-                'type'  => 'time'
+                'label' => 'outro_end',
+                'type'  => 'time',
+                'wrapper'   => [ 
+                    'class'      => 'form-group col-md-6'
+                 ],
             ],
         ];
     }
@@ -107,8 +119,8 @@ class VideoCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        CRUD::setFromDb(); // columns
-        // CRUD::addColumns(['title','URL','intro_start','intro_end','outro_start','outtro_end','series_id']);
+        // CRUD::setFromDb(); // columns
+        CRUD::addColumns(['title', 'series_id', 'URL', 'intro_start', 'intro_end', 'outro_start', 'outro_end']);
         // CRUD::removeColumn('series_id');
 
         $this->crud->addColumns($this->getColumnsData(TRUE));
@@ -118,7 +130,14 @@ class VideoCrudController extends CrudController
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
          */
     }
-
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns(['title', 'series_id', 'URL', 'intro_start', 'intro_end', 'outro_start', 'outro_end']);
+    }
 
     private function getColumnsData($show = FALSE)
     {
@@ -126,7 +145,7 @@ class VideoCrudController extends CrudController
 
             [
                 'name' => 'series_id',
-                'label' => 'Series',
+                'label' => 'series',
                 'type'     => 'relationship',
                 'function' => function ($entry) {
                     return  $entry->name;

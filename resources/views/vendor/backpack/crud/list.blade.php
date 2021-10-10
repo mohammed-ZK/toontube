@@ -1,5 +1,7 @@
 @extends(backpack_view('blank'))
 
+              {{-- <link rel="shortcut icon" href="<?= asset('favicon.ico') ?>"> --}}
+              <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= asset('https://spacetoon.com/assets/imgs/1stoon.png') ?>">
 @php
   $defaultBreadcrumbs = [
     trans('backpack::crud.admin') => url(config('backpack.base.route_prefix'), 'dashboard'),

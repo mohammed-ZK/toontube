@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -27,6 +28,7 @@ class PostFactory extends Factory
             'title' => $this->faker->title(),
             'body' => $this->faker->text(),
             'category_id' => Category::all()->random()->id,
+            'user_id' => User::all()->random()->id,
             'image' => "uploads/folder_1/folder_2/2cd9390ec06bb5c8061532ae9aeb7c84.jpg",
             // 'statues' => true, // password
         ];

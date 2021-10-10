@@ -21,12 +21,12 @@ class SerieCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -71,7 +71,7 @@ class SerieCrudController extends CrudController
     {
         // CRUD::setFromDb(); // columns
         
-        CRUD::addColumn('name');
+        // CRUD::addColumn('name');
         $this->crud->addColumns($this->getColumnsData(TRUE));
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -82,6 +82,11 @@ class SerieCrudController extends CrudController
     private function getColumnsData($show = FALSE)
     {
         return [
+            [
+                'name' => 'name',
+                'label' => 'Title',
+                'type' => 'text',
+            ],
             [
                 'name' => 'category',
                 'label' => 'Category',
@@ -120,9 +125,23 @@ class SerieCrudController extends CrudController
          */
     }
 
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns(['name', 'category_id']);
+        
+    }
     private function getFieldsData($show = FALSE)
     {
         return [
+            [
+                'name' => 'name',
+                'label' => 'Title',
+                'type' => 'text',
+            ],
             [
                 'label' => "Category",
                 'type' => 'select',
