@@ -18,10 +18,10 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->string('URL');
             $table->foreignId("series_id");
-            $table->string('intro_start');
-            $table->string('intro_end');
-            $table->string('outro_start');
-            $table->string('outro_end');
+            $table->string('intro_start')->nullable();
+            $table->string('intro_end')->nullable();
+            $table->string('outro_start')->nullable();
+            $table->string('outro_end')->nullable();
             $table->timestamps();
         });
     }
